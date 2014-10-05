@@ -6,5 +6,10 @@
         "browser-language": "HELLO",
         "cookie-encryption": "HOW",
         "dir2xml": "ARE YOU?"
+    },
+    "dirs": {
+    },
+    "files": {
+        "README.md": "README"
     }
 }
