@@ -1,6 +1,7 @@
 # scaffoldipy
 
-Build your project, cloning a skeleton from git repository and replace it with patterns
+Build your project, cloning a skeleton from git repository and replace it with patterns.
+You can write your own RegExp inside json file
 
 ## API
 

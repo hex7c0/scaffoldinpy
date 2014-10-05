@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
 '''
 @file scaffoldinpy main
 @module scaffoldinpy
@@ -131,7 +130,7 @@ if __name__ == '__main__':
             roo = False
         return roo
 
-    def crono(start, pprint=True):  # Crono old
+    def crono(start, pprint=True):
         '''
         given the initial unix time
         return time spent
@@ -164,7 +163,7 @@ if __name__ == '__main__':
                          help='disable self destruction after work')
     PARSER.add_argument('-j', '--json', metavar='path', nargs=1, type=check, \
                          help='path of cfg json file', default=[False])
-    PARSER.add_argument('-d', '--dir', metavar='path', nargs=1, type=check, \
+    PARSER.add_argument('-d', '--dir', metavar='path', nargs=1, type=str, \
                          help='name of a new directory to clone into', \
                          default=['scaffoldipy'])
     PARSER.add_argument('git', type=str, nargs='+', help='git url and options')
