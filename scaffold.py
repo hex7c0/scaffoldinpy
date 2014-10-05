@@ -5,14 +5,14 @@
 @module scaffoldinpy
 @package scaffoldinpy
 @subpackage main
-@version 0.0.1
+@version 0.0.2
 @author hex7c0 <hex7c0@gmail.com>
 @copyright hex7c0 2014
 @license GPLv3
 '''
 
 NAME = 'scaffoldinpy'
-VERSION = '0.0.1'
+VERSION = '0.0.2'
 
 try:
     # check version
@@ -24,7 +24,7 @@ try:
     # import
     from re import subn
     from json import load
-    from os import walk, remove
+    from os import walk, remove, replace
     from time import time, gmtime, strftime
     from os.path import exists, isfile, isabs, abspath
     from argparse import ArgumentParser, ArgumentTypeError
@@ -41,6 +41,16 @@ def scaffolding(args):
     @param list args - parsed input
     @return: bool
     '''
+
+    def empty(*boh):
+        '''
+        empty function
+
+        @param list boh - I don't want to know :)
+        @return: str
+        '''
+
+        return boh[2] + boh[0]
 
     def clone(git, path):
         '''
@@ -62,9 +72,9 @@ def scaffolding(args):
             out = False
         return out
 
-    def replace(patterns, original):
+    def regex(patterns, original):
         '''
-        string replace
+        string regex
 
         @param dict patterns - json
         @param str original - read
@@ -78,6 +88,35 @@ def scaffolding(args):
             counter += tmp[1]
         return original, counter
 
+    def rename_f(what, where, root):
+        '''
+        rename dir
+
+        @param dict what - json
+        @param list where - dirs
+        @param str root - root path
+        '''
+
+        for old in where:
+            if(old in what):
+                replace(root + old, root + what[old])
+        return
+
+    def rename(what, where, root):
+        '''
+        rename file
+
+        @param str what - old file name
+        @param dict where - json
+        @param str root - root path
+        @return: str
+        '''
+
+        if(what in where):
+            replace(root + what, root + where[what])
+            what = where[what]
+        return root + what
+
     try:
         if(not clone(args.git, args.dir)):
             return False
@@ -85,24 +124,40 @@ def scaffolding(args):
         if(not args.json[0]):
             return True
 
-        print('\nparsing')
+        print('parsing')
         with open(args.json[0]) as file:
             try:
-                readed = load(file)
-            except (ValueError):
+                json = load(file)
+                try:
+                    if(not json['dirs']):
+                        json['dirs'] = ''
+                        rename_f = empty
+                except KeyError:
+                    json['dirs'] = ''
+                    rename_f = empty
+                try:
+                    if(not json['files']):
+                        json['files'] = ''
+                        rename = empty
+                except KeyError:
+                    json['files'] = ''
+                    rename = empty
+            except ValueError:
                 print('json misconfigured')
                 return False
         for root, dirs, files in walk(args.dir[0]):
             root += '/'
-            for file in files:
-                with open(root + file, 'r') as read:
+            rename_f(json['dirs'], dirs, root)
+            for _file in files:
+                _file = rename(_file, json['files'], root)
+                with open(_file, 'r') as read:
                     try:
                         orig = read.read()
-                    except (UnicodeDecodeError):
+                    except UnicodeDecodeError:
                         continue
-                mod = replace(readed, orig)
+                mod = regex(json['patterns'], orig)
                 if(mod[1]):
-                    with open(root + file, 'w') as write:
+                    with open(_file, 'w') as write:
                         write.write(mod[0])
         return True
 
