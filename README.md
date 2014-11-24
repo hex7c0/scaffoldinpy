@@ -24,6 +24,6 @@ python3 scaffold.py git@github.com:hex7c0/scaffoldinpy.git
 
 ## Examples
 
-Take a look at my [examples](https://github.com/hex7c0/scaffoldipy/tree/master/examples)
+Take a look at my [examples](https://github.com/hex7c0/scaffoldinpy/tree/master/examples)
 
 ### [License GPLv3](http://opensource.org/licenses/GPL-3.0)
