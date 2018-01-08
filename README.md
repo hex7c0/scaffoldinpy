@@ -1,5 +1,7 @@
 # scaffoldipy
 
+[![Build Status](https://travis-ci.org/hex7c0/scaffoldinpy.svg?branch=master)](https://travis-ci.org/hex7c0/scaffoldinpy)
+
 Build your project, cloning a skeleton from git repository and replace it with patterns.
 You can write your own RegExp inside json file
 
@@ -24,6 +26,6 @@ python3 scaffold.py git@github.com:hex7c0/scaffoldinpy.git
 
 ## Examples
 
-Take a look at my [examples](https://github.com/hex7c0/scaffoldinpy/tree/master/examples)
+Take a look at my [examples](examples)
 
-### [License GPLv3](http://opensource.org/licenses/GPL-3.0)
+### [License GPLv3](LICENSE)
